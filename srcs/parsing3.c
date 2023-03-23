@@ -6,7 +6,7 @@
 /*   By: tnicoue <tnicoue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 15:58:50 by tnicoue           #+#    #+#             */
-/*   Updated: 2022/11/18 10:25:26 by tnicoue          ###   ########.fr       */
+/*   Updated: 2022/12/07 13:15:47 by tnicoue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,15 @@
 void	ft_checkval(t_stock *stock)
 {
 	if ((stock->valcfix3 < stock->vmin || stock->valcfix3 > stock->vmax)
-		|| (stock->valcfix3 < stock->vmin || stock->valcfix3 > stock->vmax)
-		|| (stock->valcfix3 < stock->vmin || stock->valcfix3 > stock->vmax))
+		|| (stock->valcfix2 < stock->vmin || stock->valcfix2 > stock->vmax)
+		|| (stock->valcfix1 < stock->vmin || stock->valcfix1 > stock->vmax))
 	{
 		printf("erreur, mauvaises valeurs dans C\n");
 		exit(0);
 	}
 	if ((stock->valffix3 < stock->vmin || stock->valffix3 > stock->vmax)
-		|| (stock->valffix3 < stock->vmin || stock->valffix3 > stock->vmax)
-		|| (stock->valffix3 < stock->vmin || stock->valffix3 > stock->vmax))
+		|| (stock->valffix2 < stock->vmin || stock->valffix2 > stock->vmax)
+		|| (stock->valffix1 < stock->vmin || stock->valffix1 > stock->vmax))
 	{
 		printf("erreur, mauvaises valeurs dans F\n");
 		exit(0);
@@ -35,14 +35,30 @@ void	checkmapfin(char **map, int i, t_stock *stock)
 	while (checkspace(map[i]) == 1)
 		i++;
 	stock->debut = i;
-	printf("ahouais\n");
+	ft_createmap(stock, i);
 	ft_checkmapchar(map, stock->debut);
-	printf("test\n");
 	ft_checkmapplayer(map, stock->debut, stock);
-	printf("numero\n");
 	ft_checkbeginend(map, stock->debut);
-	printf("1\n");
 	ft_checkmapwall(map, stock->debut);
+}
+
+void	ft_createmap(t_stock *stock, int i)
+{
+	int	y;
+
+	y = i;
+	while (stock->map[y])
+		y++;
+	stock->mapf = malloc(sizeof(char *) * ((y - i) + 1));
+	y = i;
+	i = 0;
+	while (stock->map[y])
+	{
+		stock->mapf[i] = ft_strdup(stock->map[y]);
+		i++;
+		y++;
+	}
+	stock->mapf[i] = NULL;
 }
 
 void	ft_checkmapwall(char **map, int i)
@@ -89,31 +105,4 @@ void	ft_checkmapchar(char **map, int i)
 		j = 0;
 		i++;
 	}
-}
-
-void	ft_checkmapplayer(char **map, int i, t_stock *stock)
-{
-	int	j;
-	int	fin;
-
-	j = 0;
-	fin = 0;
-	while (map[i])
-	{
-		if (checkspace(map[i]) == 1)
-		{
-			verifpostmap(map, i);
-			break ;
-		}
-		while (map[i][j])
-		{
-			if (map[i][j] == 'N' || map[i][j] == 'E'
-			|| map[i][j] == 'W' || map[i][j] == 'S')
-				stock->playernb++;
-			j++;
-		}
-		j = 0;
-		i++;
-	}
-	ft_errplayer(stock);
 }

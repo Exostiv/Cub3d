@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tnicoue <tnicoue@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kcatrix <kcatrix@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 11:05:57 by tnicoue           #+#    #+#             */
-/*   Updated: 2022/11/18 10:15:33 by tnicoue          ###   ########.fr       */
+/*   Updated: 2022/12/08 15:07:06 by kcatrix          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ int	verifind2(char **line2, int i)
 
 void	valaffect(int i, t_stock *stock, char **line)
 {
-	printf("line2[1] = %s, i = %d\n", line[1], i);
 	if (i == 1 && chkdoublon(stock->pathsprites) == 0)
 		stock->pathsprites = ft_strdup(line[1]);
 	if (i == 2 && chkdoublon(stock->pathspriten) == 0)
@@ -75,6 +74,8 @@ void	valaffect(int i, t_stock *stock, char **line)
 		stock->pathspritee = ft_strdup(line[1]);
 	if (i == 4 && chkdoublon(stock->pathspritew) == 0)
 		stock->pathspritew = ft_strdup(line[1]);
+	if ((i == 1 || i == 2 || i == 3 || i == 4) && line[2])
+		exit(printf("Mauvaises definition des paths"));
 	if (i == 5 && chkdoublon2(stock->valc) == 0)
 		stock->valc = ft_split(line[1], ',');
 	if (i == 6 && chkdoublon2(stock->valf) == 0)

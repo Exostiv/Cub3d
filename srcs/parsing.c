@@ -6,7 +6,7 @@
 /*   By: tnicoue <tnicoue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 09:24:18 by tnicoue           #+#    #+#             */
-/*   Updated: 2022/11/18 09:32:25 by tnicoue          ###   ########.fr       */
+/*   Updated: 2022/12/07 13:38:27 by tnicoue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	openmap(char **av, int *y)
 {
-	char	*mappath;
 	int		fd;
 	int		i;
+	char	*mappath;
 
 	i = 0;
 	while (av[1][i] != '.')
@@ -26,12 +26,13 @@ int	openmap(char **av, int *y)
 		printf("Format de la map non valide\n");
 		return (-1);
 	}
-	mappath = ft_strjoin2("maps/", av[1]);
+	mappath = strdup(av[1]);
 	fd = open(mappath, O_RDONLY, 0777);
 	if (fd == -1)
 		return (err_mapnotfound());
 	else
 		(*y) = ft_lenghtmap(fd, mappath);
+	free(mappath);
 	return (fd);
 }
 
@@ -57,8 +58,7 @@ int	formatmap(int fd, t_stock *stock, int y)
 {
 	int	i;
 
-	printf("y = %d\n", y);
-	stock->map = malloc(sizeof(char *) * y + 1);
+	stock->map = malloc(sizeof(char *) * (y + 1));
 	i = 0;
 	while (i < y)
 	{
@@ -68,6 +68,7 @@ int	formatmap(int fd, t_stock *stock, int y)
 	stock->map[i] = NULL;
 	close(fd);
 	i = 0;
+	ft_lexer(stock);
 	return (0);
 }
 

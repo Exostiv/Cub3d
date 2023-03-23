@@ -6,7 +6,7 @@
 /*   By: tnicoue <tnicoue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 09:39:22 by tnicoue           #+#    #+#             */
-/*   Updated: 2022/11/18 10:15:33 by tnicoue          ###   ########.fr       */
+/*   Updated: 2022/12/06 13:26:50 by tnicoue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ void	ft_valfix2(char **str)
 	j = 0;
 	while (str[i])
 		i++;
-	printf("i = %d\n", i);
 	while (str[i - 1][j] != '\n')
 		j++;
 	str[i - 1][j] = '\0';
